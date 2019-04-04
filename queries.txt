@@ -1,0 +1,217 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1308
+Server version: 5.5.24 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+mysql> use capstore;
+Database changed
+mysql> show tables;
++--------------------------+
+| Tables_in_capstore       |
++--------------------------+
+| address_detail           |
+| addseq                   |
+| admin_detail             |
+| cart                     |
+| customer_detail          |
+| custseq                  |
+| dummy_order              |
+| email                    |
+| feedback                 |
+| feedseq                  |
+| hibernate_sequence       |
+| merchant_detail          |
+| merchant_detail_products |
+| merchant_feedback        |
+| merchant_product         |
+| mercseq                  |
+| offer                    |
+| offerseq                 |
+| order_detail             |
+| ordseq                   |
+| prodseq                  |
+| product_detail           |
+| product_detail_merchants |
+| product_feedback         |
+| promo                    |
+| return_request           |
+| user                     |
+| wish_list                |
++--------------------------+
+28 rows in set (0.01 sec)
+
+mysql> drop database capstore;
+Query OK, 28 rows affected (0.95 sec)
+
+mysql> create database capstore;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use capstore;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_capstore      |
++-------------------------+
+| admindetail             |
+| admseq                  |
+| cart                    |
+| cartseq                 |
+| customerdetail          |
+| custseq                 |
+| dummyorder              |
+| email                   |
+| hibernate_sequence      |
+| mercfseq                |
+| merchantdetail          |
+| merchantdetail_products |
+| merchantfeedback        |
+| mercseq                 |
+| offer                   |
+| offerseq                |
+| orderdetail             |
+| ordseq                  |
+| prodfseq                |
+| prodseq                 |
+| productdetail           |
+| productfeedback         |
+| promo                   |
+| retseq                  |
+| returnrequest           |
+| user                    |
+| wishlist                |
+| wishseq                 |
++-------------------------+
+28 rows in set (0.01 sec)
+
+mysql> desc customerdetail;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| customerid   | int(11)      | NO   | PRI | NULL    |       |
+| address      | varchar(100) | NO   |     | NULL    |       |
+| email        | varchar(30)  | NO   | MUL | NULL    |       |
+| mobileno     | varchar(10)  | NO   |     | NULL    |       |
+| customername | varchar(20)  | NO   |     | NULL    |       |
+| pincode      | varchar(6)   | NO   |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into customerdetail values(10001,"Mathura","abc@gmail.com","7897897897","Krishan","281406");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc merchantdetail;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| merchantid     | int(11)      | NO   | PRI | NULL    |       |
+| address        | varchar(100) | NO   |     | NULL    |       |
+| email          | varchar(30)  | NO   | MUL | NULL    |       |
+| mobileno       | varchar(10)  | NO   |     | NULL    |       |
+| merchantname   | varchar(20)  | NO   |     | NULL    |       |
+| merchantrating | int(11)      | YES  |     | NULL    |       |
+| storename      | varchar(20)  | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> insert into merchantdetail values(2001,"Delhi","abc@gmail.com","9876543210","Ravi",4,"Ravi stores");
+Query OK, 1 row affected (0.06 sec)
+
+mysql> update table customerdetail set email='xyz@gmail.com' where customerid=10001;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table customerdetail set email='xyz@gmail.com' where customerid=10001' at line 1
+mysql> update customerdetail set email='xyz@gmail.com' where customerid=10001;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update merchantdetail set email='pqr@gmail.com' where merchantid=2001;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from customerdetail;
++------------+---------+---------------+------------+--------------+---------+
+| customerid | address | email         | mobileno   | customername | pincode |
++------------+---------+---------------+------------+--------------+---------+
+|      10001 | Mathura | xyz@gmail.com | 7897897897 | Krishan      | 281406  |
++------------+---------+---------------+------------+--------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from merchantdetail;
++------------+---------+---------------+------------+--------------+----------------+-------------+
+| merchantid | address | email         | mobileno   | merchantname | merchantrating | storename   |
++------------+---------+---------------+------------+--------------+----------------+-------------+
+|       2001 | Delhi   | pqr@gmail.com | 9876543210 | Ravi         |              4 | Ravi stores |
++------------+---------+---------------+------------+--------------+----------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> desc admin;
+ERROR 1146 (42S02): Table 'capstore.admin' doesn't exist
+mysql> desc admindetail;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| adminid   | int(11)     | NO   | PRI | NULL    |       |
+| email     | varchar(30) | NO   | MUL | NULL    |       |
+| mobileno  | varchar(10) | NO   |     | NULL    |       |
+| adminname | varchar(20) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into admindetail values(101,"abc@gmail.com","7878787878","Shobit");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from email;
+Empty set (0.00 sec)
+
+mysql> desc email;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| eid         | int(11)      | NO   | PRI | NULL    |       |
+| bodymessage | varchar(500) | YES  |     | NULL    |       |
+| receiver    | varchar(20)  | NO   |     | NULL    |       |
+| sender      | varchar(20)  | NO   |     | NULL    |       |
+| status      | varchar(1)   | NO   |     | NULL    |       |
+| subject     | varchar(50)  | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from email;
+Empty set (0.00 sec)
+
+mysql> select * from email;
+Empty set (0.00 sec)
+
+mysql> select * from customerdetail;
++------------+---------+---------------+------------+--------------+---------+
+| customerid | address | email         | mobileno   | customername | pincode |
++------------+---------+---------------+------------+--------------+---------+
+|      10001 | Mathura | xyz@gmail.com | 7897897897 | Krishan      | 281406  |
++------------+---------+---------------+------------+--------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from email;
++-------+------------------------------------------------------------------------------------------+---------------+---------------+--------+----------------------------------+
+| eid   | bodymessage                                                                              | receiver      | sender        | status | subject                          |
++-------+------------------------------------------------------------------------------------------+---------------+---------------+--------+----------------------------------+
+| 11001 | Hello Mr. Krishan !! Don't Reply this mail.It is autogenerated mail. Your OTP is : 11519 | xyz@gmail.com | abc@gmail.com | N      | Verification of Customer's Email |
++-------+------------------------------------------------------------------------------------------+---------------+---------------+--------+----------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
